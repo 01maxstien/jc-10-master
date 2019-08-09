@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        th{
+            cursor: pointer
+        }
+
+        th:hover{
+            background-color: lightblue;
+            color: black;
+            transition: 0.5s
+        }
+
+        .thKu{
+            background-color: rgb(1, 2, 68);
+            color: white;
+            transition: 0.5s
+        }
+    </style>
+    <form class="container border mt-3 p-3">
+        <div class="row">
+            <div class="col-6">
+                <label>Name</label>
+                <input type="text" id="nama" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label>Age</label>
+                <input class="form-control" id="umur" type="number">
+            </div>
+            <div class="col-6">
+                <label>Job</label>
+                <input class="form-control" id="pekerjaan" type="text">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <input type="button" value="ADD DATA" onclick="addData()" class="btn btn-block btn-secondary">
+            </div>
+        </div>
+    </form>
+
+    <div class="container mt-5 text-center">
+        <h3>Filter</h3>
+        <div class="row justify-content-center text-center">
+            <input onkeyup="filterData()" id="filter-name" placeholder="Filter by name" type="text" class="form-control col-3 m-2">
+            <input onkeyup="filterData()" id="filter-age" placeholder="Filter by age" type="text" class="form-control col-3 m-2">
+            <input onkeyup="filterData()" id="filter-job" placeholder="Filter by Job" type="text" class="form-control col-3 m-2">
+        </div>
+    </div>
+
+    <div class="container mt-5 text-center">
+        <h3>Data</h3>
+        <table class="table-bordered table text-center mt-3">
+            <thead>
+                <tr>
+                    <th class="thKu" onclick="sortByName()">Name</th>
+                    <th class="thKu">Age</th>
+                    <th class="thKu">Job</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        class Person{
+            constructor(nama, umur, pekerjaan){
+                this.nama = nama,
+                this.umur = umur,
+                this.pekerjaan = pekerjaan
+            }
+        }
+
+        var data = [
+            new Person('Andi', '23', 'Coder'),
+            new Person('Seto', '43', 'Developer'),
+            new Person('Budi', '13', 'CEO'),
+            new Person('Anton', '23', 'Student'),
+            new Person('Andre', '43', 'Big boss'),
+            new Person('Max', '53', 'Cogan')
+        ]
+
+        var nameDir = 'asc'
+
+        function showData(arr){
+            var hasil = ''
+            for(var i = 0; i < arr.length; i++){
+                hasil += `<tr>
+                        <td>${arr[i].nama}</td>
+                        <td>${arr[i].umur}</td>
+                        <td>${arr[i].pekerjaan}</td>
+                        </tr>`
+            }
+
+            document.getElementsByTagName('tbody')[0].innerHTML = hasil
+        }
+
+        function addData(){
+            var inputNama = document.getElementById('nama').value
+            var inputUmur = document.getElementById('umur').value
+            var inputPekerjaan = document.getElementById('pekerjaan').value
+
+            var newData = new Person(inputNama, inputUmur, inputPekerjaan)
+
+            data[data.length] = newData
+            showData(data)
+        }
+
+        showData(data)
+
+        function filterData(){
+            var filterName = document.getElementById('filter-name').value
+            var filterAge = document.getElementById('filter-age').value
+            var filterJob = document.getElementById('filter-job').value
+
+            var tempData = []
+
+            // alert(filterName)
+
+            for(var i = 0; i < data.length; i++){
+                if(data[i].nama.startsWith(filterName) && data[i].pekerjaan.startsWith(filterJob) && data[i].umur.startsWith(filterAge)){
+                    tempData.push(data[i])
+                }
+            }
+
+            showData(tempData)
+        }
+
+        function sortByName(){
+            var tempData = data
+
+            if(nameDir == 'asc'){
+                for (let i = tempData.length - 1; i > 0; i--) {
+                    for (let j = 0; j < i; j++) {
+                        if (tempData[j].nama > tempData[j + 1].nama) {
+                            const temp = tempData[j];
+                            tempData[j] = tempData[j + 1];
+                            tempData[j + 1] = temp;
+                        }
+                    }
+                }
+                nameDir = 'desc'
+            }else{
+                for (let i = tempData.length - 1; i > 0; i--) {
+                    for (let j = 0; j < i; j++) {
+                        if (tempData[j].nama < tempData[j + 1].nama) {
+                            const temp = tempData[j];
+                            tempData[j] = tempData[j + 1];
+                            tempData[j + 1] = temp;
+                        }
+                    }
+                }
+                nameDir = 'asc'
+            }
+
+
+            showData(tempData)
+        }
+
+    </script>
+</body>
+</html>

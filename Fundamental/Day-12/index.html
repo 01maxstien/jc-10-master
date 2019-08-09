@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        table, tr, td{
+            text-align: center;
+            border: solid black 1px;
+            border-collapse: collapse;
+            padding: 10px;
+            margin: 50px;
+        }
+    </style>
+    <center>
+        <table>
+            <thead>
+                <tr id='table-head'>
+                    <td>Name</td>
+                    <td>Age</td>
+                    <td>Job</td>
+                </tr>
+            </thead>
+    
+            <tbody id='gampang'>
+    
+            </tbody>
+    
+            <tfoot>
+                <tr>
+                    <td><input class="form-control" id="nama" type="text" placeholder="Input nama"></td>
+                    <td><input class="form-control" id="umur" type="number" placeholder="Input umur"></td>
+                    <td><input class="form-control" id="pekerjaan" type="text" placeholder="Input pekerjaan"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" class="btn btn-primary" ondblclick="addData()" value="Tambah Bro">
+        <table>
+            <tr>
+                <td><input type="text" class="form-control" id="filter-nama" onkeyup="filterNama()" placeholder="Filter by nama"></td>
+            </tr>
+        </table>
+    </center>
+
+    <script>
+        class Person{
+            constructor(nama, umur, pekerjaan){
+                this.nama = nama,
+                this.umur = umur,
+                this.pekerjaan = pekerjaan
+            }
+        }
+
+        var data = [
+            new Person('Andi', 23, 'Coder'),
+            new Person('Seto', 43, 'Developer'),
+            new Person('Budi', 13, 'CEO'),
+            new Person('Anton', 23, 'Student'),
+            new Person('Andre', 43, 'Big boss'),
+            new Person('Max', 53, 'Cogan')
+        ]
+
+        function showData(arr){
+            var hasil = ''
+
+            if(arr.length > 0){
+                document.getElementById('table-head').innerHTML = `<td>Name</td>
+                                                                    <td>Age</td>
+                                                                    <td>Job</td>
+                                                                    <td>Delete</td>`
+            }else{
+                document.getElementById('table-head').innerHTML = `<td>Name</td>
+                                                                    <td>Age</td>
+                                                                    <td>Job</td>`
+            }
+            
+            for(var i = 0; i < arr.length; i++){
+                hasil += `<tr>
+                        <td>${arr[i].nama}</td>
+                        <td>${arr[i].umur}</td>
+                        <td>${arr[i].pekerjaan}</td>
+                        <td><input type="button" class="btn btn-danger" onclick="delData(${i})" value="Hapus aku"></td>
+                        </tr>`
+            }
+
+            document.getElementById('gampang').innerHTML = hasil
+        }
+
+        function addData(){
+            var inputNama = document.getElementById('nama').value
+            var inputUmur = document.getElementById('umur').value
+            var inputPekerjaan = document.getElementById('pekerjaan').value
+
+            var newData = new Person(inputNama, inputUmur, inputPekerjaan)
+
+            data[data.length] = newData
+            showData(data)
+        }
+
+        function filterNama(){
+            var tempData = []
+            var filter = document.getElementById('filter-nama').value
+
+            for(var i = 0; i < data.length; i++){
+                if(data[i].nama.startsWith(filter)){
+                    tempData.push(data[i])
+                }
+            }
+
+            showData(tempData)
+        }
+
+        function delData(idx){
+            data.splice(idx, 1)
+            showData(data)
+        }
+
+        showData(data)
+
+    </script>
+</body>
+</html>

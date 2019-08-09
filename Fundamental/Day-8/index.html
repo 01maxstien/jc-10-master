@@ -1,0 +1,192 @@
+<script>
+
+// Menu login as ?
+// 1. Admin, 2. User, 3. Exit
+
+// Menu Admin
+// 1. Show products
+// 2. Input product
+// 3. Delete product
+// 4. Back
+
+// Menu User
+// 1. Go shopping
+// 2. Show cart
+// 3. Checkout
+// 4. to admin
+
+var arrProduct = ['Jeruk', 'Apel', 'Kiwi']
+var arrPrice = [12000, 15000, 10000]
+
+var cartProduct = []
+var cartQty = []
+var cartPrice = []
+
+var repeatMain;
+
+// ========== Kumpulan Function ==========
+function showMenu(){
+    var hasil = ''
+
+    for(var i = 0; i < arrProduct.length; i++){
+        hasil += (i+1) + '. ' + arrProduct[i] + ' Rp.' + arrPrice[i] + '\n'
+    }
+
+    return hasil
+}
+
+function inputProduct(barang, harga){
+    arrProduct.push(barang)
+    arrPrice.push(harga)
+}
+
+function delProduct(barang){
+    var idx = arrProduct.indexOf(barang)
+
+    if(idx != -1){
+        arrProduct.splice(idx, 1)
+        arrPrice.splice(idx, 1)
+
+        alert(barang + ' sudah dihapus')
+
+    }else{
+        alert('Item anda tidak ada kawan!')
+    }
+
+}
+
+function addToCart(idxBarang){
+    var idx = idxBarang - 1
+    
+
+    if(idx > -1 && idx < arrProduct.length){
+        do{
+            var qty = parseInt(prompt('Berapa banyak?'))
+
+            if(qty > 0){
+                
+                var barangUser = arrProduct[idx]
+                if(cartProduct.includes(barangUser)){
+                    var idxNewQty = cartProduct.indexOf(barangUser)
+                    var newQty = cartQty[idxNewQty] + qty
+                    cartQty[idxNewQty] = newQty
+                    repeatQty = false
+                }else{
+                    cartProduct.push(arrProduct[idx])
+                    cartQty.push(qty)
+                    cartPrice.push(arrPrice[idx])
+                    repeatQty = false
+                }
+            }else{
+                alert('Invalid input!')
+                repeatQty = true
+            }
+
+        }while(repeatQty)
+    }else{
+        alert('Barang anda tidak ada!')
+    }
+}
+
+function showCart(){
+    var hasil = ''
+    
+    if(cartProduct.length > 0){
+        for(var i = 0; i < cartProduct.length; i++){
+            hasil += (i+1) + '. ' + cartProduct[i] + ' x ' + cartQty[i] + '\n'
+        }
+        alert(hasil)
+    }else{
+        alert('Cart anda kosong!')
+    }
+
+}
+
+function checkout(){
+    var totalPrice = 0
+
+    // cart -> [apel, jeruk]
+    // qty -> [3, 5]
+    // var arrProduct = ['Jeruk', 'Apel', 'Kiwi']
+    // var arrPrice = [12000, 15000, 10000]
+
+    for(var i = 0; i < cartProduct.length; i++){
+        totalPrice += cartPrice[i] * cartQty[i]
+    }
+
+    do{
+        var cash = prompt('Total price = ' + totalPrice)
+
+        if(cash > totalPrice){
+            alert('Uang kembalian anda adalah Rp.' + (cash - totalPrice))
+            cartPrice = []
+            cartProduct = []
+            cartQty = []
+            repeatCash = false
+        }else if(cash == totalPrice){
+            alert('Terima kasih sudah membayar dengan uang pas!')
+            cartPrice = []
+            cartProduct = []
+            cartQty = []
+            repeatCash = false
+        }else if(cash < totalPrice){
+            alert('Uang anda kurang Rp.' + (totalPrice - cash))
+            repeatCash = true
+        }
+    }while(repeatCash)
+}
+
+// ========================================
+
+do{
+    var mainMenu = prompt('Login sebagai \n1. Admin \n2.User \n3.Exit')
+
+    if(mainMenu == 1){      // Admin
+        do{
+            var adminMenu = prompt('1. Show products \n2. Input \n3. Delete \n4. Back')
+
+            if(adminMenu == 1){  //Show
+                alert(showMenu())
+                repeatAdmin = true
+            }else if(adminMenu == 2){ //Input
+                var promptBarang = prompt('Input nama barang anda!')
+                var promptHarga = prompt('Input harga barang anda')
+
+                inputProduct(promptBarang, promptHarga)
+                repeatAdmin = true
+
+            }else if(adminMenu == 3){ //Delete
+                var promptDelete = prompt('Input product yang ingin dihapus \n' +showMenu() )
+
+                delProduct(promptDelete)
+                repeatAdmin = true
+            }else if(adminMenu == 4){ //Back
+                repeatAdmin = false
+                repeatMain = true
+            }
+        }while(repeatAdmin)
+    }else if(mainMenu == 2){  // User
+        do{
+            var userMenu = prompt('1. Go Shopping \n2. Show Cart \n3. Checkout \n4.To admin menu')
+
+            if(userMenu == 1){
+                var promptUserItem = prompt('Pilih item yang anda ingin beli!\n' + showMenu())
+
+                addToCart(promptUserItem)
+                repeatUser = true
+            }else if(userMenu == 2){
+                showCart()
+            }else if(userMenu == 3){
+                checkout()
+            }else if(userMenu == 4){
+
+            }
+
+        }while(repeatUser)
+    }else if(mainMenu == 3){   // Exit
+
+    }
+
+}while(repeatMain)
+
+</script>

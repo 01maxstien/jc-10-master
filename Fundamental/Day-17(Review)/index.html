@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body class="container">
+    <style>
+    img {
+        width: 75px
+    }
+    </style>
+    <center>
+        <h3>Products</h3>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Gambar</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody id="pokemon">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><input placeholder="Input item name" type="text" id="name" class="form-control"></td>
+                    <td><input placeholder="Input price" type="number" id="price" class="form-control"></td>
+                    <td><input placeholder="Input img link" type="text" id="pic" class="form-control"></td>
+                    <td><input type="button" value="ADD ITEM" class="btn btn-primary"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <h3>Cart</h3>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Gambar</th>
+                    <th>Quantity</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="naruto">
+                
+            </tbody>
+        </table>
+
+        <table id="checkout" class="table table-bordered text-center">
+
+        </table>
+    </center>
+    <script>
+        
+        class Product {
+            constructor(nama, harga, gambar){
+                this.nama = nama,
+                this.harga = harga,
+                this.gambar = gambar
+            }
+        }
+
+        var data = [
+            new Product('kacang', 20000, './kacang.jpeg'),
+            new Product('susu', 10000, './susu.jpeg'),
+            new Product('roti', 5000, './roti.jpeg'),
+        ]
+        var cartProduct = []
+        var cartQty = []
+
+        showData = (arr) => {
+            let hasil = ''
+            arr.map((val, idx) => {
+                hasil +=    `<tr>
+                                <td>${val.nama.charAt(0).toUpperCase() + val.nama.slice(1,val.nama.length)}</td>
+                                <td>${val.harga}</td>
+                                <td><img src="${val.gambar}" /></td>
+                                <td><input type="button" value="ADD TO CART" class="btn btn-success" onclick="addProduct(${idx})" /></td>
+                            </tr>`
+            })
+
+            document.getElementById('pokemon').innerHTML = hasil
+        }
+
+        addProduct = (idx) => {
+            var qty = parseInt(prompt('Berapa banyak?'))
+
+            cartProduct.push(data[idx])
+            cartQty.push(qty)
+
+            showCart(cartProduct)
+        }
+
+        showCart = (arr) => {
+            let hasil = ''
+            arr.map((val,idx) => {
+                hasil +=   `<tr>
+                                <td>${val.nama}</td>
+                                <td>${val.harga}</td>
+                                <td><img src="${val.gambar}" /></td>
+                                <td>${cartQty[idx]}</td>
+                                <td><input type="button" value="DELETE" class="btn btn-danger"></td>
+                            </tr>`
+            })
+
+            document.getElementById('naruto').innerHTML = hasil
+        }
+
+        showData(data)
+
+    </script>
+</body>
+</html>

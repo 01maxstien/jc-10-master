@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        table, th, td{
+            text-align: center;
+            border: solid black 1px;
+            border-collapse: collapse;
+            padding: 10px;
+            margin: 50px;
+        }    
+    </style>
+    <center>
+        <h1>DATAKU!</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Nama</td>
+                    <td>Usia</td>
+                    <td>Pekerjaan</td>
+                </tr>
+            </thead>
+            <!--  -->
+            <tbody>
+                <!-- DITAMBAHKAN DISINI -->
+            </tbody>
+            <!--  -->
+            <tfoot>
+                <tr>
+                    <td><input id="nama" placeholder="Input nama" type="text"></td>
+                    <td><input id="umur" placeholder="Input umur" type="number"></td>
+                    <td><input id="pekerjaan" placeholder="Input pekerjaan" type="text"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" onclick="tambahData()" value="ADD"/>
+    </center>
+
+    <script>
+        class Orang{
+            constructor(nama, umur, pekerjaan){
+                this.nama = nama,
+                this.usia = umur,
+                this.pekerjaan = pekerjaan
+            }
+        }
+
+        var data = [
+            new Orang('Andi', 23, 'Coder'),
+            new Orang('Seto', 43, 'Developer'),
+            new Orang('Budi', 13, 'CEO')
+        ]
+
+        tambahData = () => {
+            var inputNama = document.getElementById('nama').value
+            var inputUmur = document.getElementById('umur').value
+            var inputJob = document.getElementById('pekerjaan').value
+
+            var newMan = new Orang(inputNama, inputUmur, inputJob)
+
+            data.push(newMan)
+            tampilData(data)
+        }
+
+        tampilData = (arrData) => {
+            var hasil = ''
+            arrData.map((val) => {
+                hasil += `<tr>
+                        <td>${val.nama}</td>
+                        <td>${val.usia}</td>
+                        <td>${val.pekerjaan}</td>
+                        </tr>`
+            })
+
+            document.getElementsByTagName('tbody')[0].innerHTML = hasil
+        }
+
+        tampilData(data)
+
+    </script>
+</body>
+</html>

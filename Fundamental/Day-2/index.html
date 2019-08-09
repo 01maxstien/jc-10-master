@@ -1,0 +1,71 @@
+<script>
+// if(angka % 2 == 0){
+//     alert('angka anda genap')
+// }else{
+//     alert('angka anda ganjil')
+// }
+
+
+// var angka1 = parseInt(prompt('Masukkan angka pertama!'))
+// var angka2 = parseInt(prompt('Masukkan angka kedua!'))
+
+// var total = angka1 + angka2
+
+// alert('Total kudua angka anda adalah ' + total)
+
+
+
+
+// 1. User input nilai
+// 2. Nilai diproses menjadi grade :
+    // 90 - 100 -> A
+    // 80 - 89 -> B
+    // 70 - 79 -> C
+    // 60 - 69 -> D
+    // 59 - 0 -> F
+//  3. Tampilkan grade user!
+// contoh : 'Grade anda __'
+
+// var nilai = prompt('Masukkan nilai anda!')
+// var grade;
+
+// if(nilai >= 90){
+//     grade = 'A'
+// }else if(nilai >= 80){
+//     grade = 'B'
+// }else if(nilai >= 70){
+//     grade = 'C'
+// }else if(nilai >= 60){
+//     grade = 'D'
+// }else{
+//     grade = 'F'
+// }
+
+// alert('Grade anda ' + grade)
+
+// 1. Input berat badan (kg)
+// 2. Input tinggi badan (m)
+// 3. Proses IMT dengan rumus
+// 4. Tampilkan result
+
+var berat = parseFloat(prompt('Masukkan berat badan'))
+var tinggi = parseFloat(prompt('Masukkan tinggi!'))
+
+var IMT = berat / Math.pow(tinggi, 2)
+var hasil;
+
+if(IMT > 39.9){
+    hasil = 'Obesitas'
+}else if(IMT >= 30){
+    hasil = 'BB Sangat berlebih'
+}else if(IMT >= 25){
+    hasil = 'BB Berlebih'
+}else if(IMT >= 18.5){
+    hasil = 'BB Ideal'
+}else{
+    hasil = 'BB Kurang'
+}
+
+alert('IMT = ' + IMT + ', '+hasil)
+
+</script>

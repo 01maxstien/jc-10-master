@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>UJIAN FUNDAMENTAL</title>
+</head>
+
+<body class="container">
+    <style>
+        img {
+            width: 75px
+        }
+    </style>
+    <center>
+        <br>
+        <br>
+        <h3><b>KOPERASI SUMBER MAJU PURWADHIKA</b></h3>
+        <br>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr align="center">
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Gambar</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody id="pokemon">
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td><input placeholder="Input item name" type="text" id="name" class="form-control"></td>
+                    <td><input placeholder="Input price" type="number" id="price" class="form-control"></td>
+                    <td><input placeholder="Input img link" type="text" id="pic" class="form-control"></td>
+                    <td align="center"><input type="reset" value="ADD ITEM" class="btn btn-primary btn-sm"
+                            onclick="addData()"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <br>
+        <h3>
+            <b>KERANJANG MASIH KOSONG</b>
+        </h3>
+
+        <div id="total harga"></div>
+        <br>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            </thead>
+            <tbody id="naruto">
+
+            </tbody>
+        </table>
+        <center>
+            <table id="cekot" class="table table-bordered" align="center">
+                <!-- cekout -->
+            </table>
+            <table id="tabelbayar" class="table table-bordered">
+                <thead id="input-bayar">
+                    <!-- input bayar -->
+                </thead>
+            </table>
+        </center>
+
+
+
+    </center>
+    <script>
+        class Product {
+            constructor(nama, harga, gambar) {
+                this.nama = nama,
+                    this.harga = harga,
+                    this.gambar = gambar
+            }
+        }
+        var data = [
+            new Product('kacang', 20000, 'gambar/kacang.jpeg'),
+            new Product('susu', 10000, 'gambar/susu.jpeg'),
+            new Product('roti', 5000, 'gambar/roti.jpeg'),
+        ]
+
+        var cartProduct = []
+        var cartQty = []
+
+        showData = (arr) => {
+            let hasil = ''
+            arr.map((val, idx) => {
+                hasil += `<tr>
+                                <td align="center">${val.nama.charAt(0).toUpperCase() + val.nama.slice(1,val.nama.length)}</td>
+                                <td align="center">${val.harga}</td>
+                                <td align="center"><img src="${val.gambar}" /></td>
+                                <td align="center"><input type="button" value="ADD TO CART" class="btn btn-outline-primary btn-sm" onclick="addProduct(${idx})" /></td>
+                            </tr>`
+            })
+            document.getElementById('pokemon').innerHTML = hasil
+        }
+
+
+        addProduct = (idx) => {
+            var tmbh = confirm("Apakah anda ingin memasukkan kedalam keranjang?")
+            if (tmbh == true) {
+                var qty = parseInt(prompt("Berapa banyak yang ingin ditambahkan?"))
+                if (cartProduct.includes(data[idx])) {
+                    var idxNewqty = cartProduct.indexOf(data[idx])
+                    var newQty = cartQty[idxNewqty] + qty
+                    cartQty[idxNewqty] = newQty
+                } else {
+                    cartProduct.push(data[idx])
+                    cartQty.push(qty)
+                }
+                showCart(cartProduct)
+            }
+
+        }
+
+        function addData() {
+            var inputNama = document.getElementById('name').value
+            var inputHarga = document.getElementById('price').value
+            var inputgambar = document.getElementById('pic').value
+            if (inputNama == "" || inputHarga == "" || inputgambar == "") {
+                alert('Masukan Data terlebih Dahulu')
+            } else {
+                var newData = new Product(inputNama, inputHarga, inputgambar)
+                data[data.length] = newData
+            }
+            showData(data)
+
+        }
+        showData(data)
+
+        delproduk = (idx) => {
+            var hps = confirm("Apakah anda ingin menghapus barang?")
+            if (hps == true) {
+                var qty = parseInt(prompt('Hapus berapa banyak?'));
+                cartQty[idx] -= qty
+                if (cartQty[idx] <= 0) {
+                    cartProduct.splice(idx, 1)
+                    cartQty.splice(idx, 1)
+                    showCart(cartProduct)
+                } else {
+                    showCart(cartProduct)
+                }
+            }
+
+        }
+
+        var ding;
+
+        function checkout() {
+            var durasi = 31
+            ding = setInterval(() => {
+                durasi -= 1
+                if (durasi == -1) {
+                    clearInterval(ding)
+                    document.getElementById("cekot").innerHTML = ""
+                    document.getElementsByTagName("thead")[1].innerHTML = ""
+                    document.getElementById('naruto').innerHTML = ""
+                    document.getElementsByTagName('h3')[1].innerHTML = "Tidak Ada Belanjaan"
+                    document.getElementById('total harga').innerHTML = " "
+                    cartProduct = []
+                    cartQty = []
+                    alert("Waktu Habis")
+                } else {
+                    document.getElementById("cekot").innerHTML = durasi + " detik"
+                }
+            }, 1000)
+
+
+            document.getElementById("input-bayar").innerHTML = `
+             <tr> 
+                <th> <input id="nominal" type="Number" placeholder="Masukan Nominal"/></th>
+                <th> <input type="button" align="center" value="BAYAR" onclick="pembayaran()"  class="btn btn-primary btn-xl"/></th>
+            </tr>
+             `
+
+        }
+
+        function pembayaran() {
+            var uang = parseInt(document.getElementById("nominal").value)
+            var hasil = 0
+            for (i = 0; i < cartProduct.length; i++) {
+                hasil += cartProduct[i].harga * cartQty[i]
+            }
+
+            if (uang >= hasil) {
+                alert("Kembalian anda Rp " + (uang - hasil) + "\n" + "Terimakasih Sudah Berbelanja")
+                clearInterval(ding)
+                document.getElementById("cekot").innerHTML = ""
+                document.getElementsByTagName("thead")[1].innerHTML = ""
+                document.getElementById('naruto').innerHTML = ""
+                document.getElementsByTagName('h3')[1].innerHTML = "Tidak Ada Belanjaan"
+                document.getElementById('total harga').innerHTML = " "
+                document.getElementById('input-bayar').innerHTML = ""
+                cartProduct = []
+                cartQty = []
+            } else {
+                parseInt(alert("Uang anda kurang " + (hasil - uang) +"\n"+"Tolong masukan kembali nominal"))
+            }
+
+        }
+
+
+        showCart = (arr) => {
+            let hasil = ''
+            arr.map((val, idx) => {
+                hasil += `<tr align="center">
+                                <td>${val.nama}</td>
+                                <td>${val.harga}</td>
+                                <td><img src="${val.gambar}" /></td>
+                                <td>${cartQty[idx]}</td>
+                                <td><input type="button" value="DELETE" class="btn btn-outline-danger btn-sm" onclick="delproduk(${idx})"/></td>
+                            </tr>
+                          `
+            })
+
+            var total = 0
+            var price = 0
+
+            for (var i = 0; i < cartQty.length; i++) {
+                total += cartQty[i]
+            }
+            for (var i = 0; i < cartProduct.length; i++) {
+                price += cartProduct[i].harga * cartQty[i]
+            }
+
+            if (arr.length > 0) {
+                document.getElementById("cekot").innerHTML = `
+                <input type="button" align="center" class="btn btn-warning" value="Checkout" onclick="checkout()">
+                `
+                document.getElementsByTagName("thead")[1].innerHTML = `
+                <tr align="center">
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Gambar</th>
+                    <th>Quantity</th>
+                    <th>Delete</th>
+                </tr>`
+                document.getElementById('naruto').innerHTML = hasil
+                document.getElementsByTagName('h3')[1].innerHTML = " Anda Telah Memasukkan " + total +
+                    " Barang di Keranjang"
+                document.getElementById('total harga').innerHTML = "Total Bayar Belanja Anda Rp. " + price
+            } else {
+                document.getElementById("cekot").innerHTML = ""
+                document.getElementsByTagName("thead")[1].innerHTML = ""
+                document.getElementById('naruto').innerHTML = ""
+                document.getElementsByTagName('h3')[1].innerHTML = "Tidak Ada Belanjaan"
+                document.getElementById('total harga').innerHTML = " "
+            }
+
+        }
+        showData(data)
+    </script>
+</body>
+
+</html

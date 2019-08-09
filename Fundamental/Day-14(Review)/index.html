@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Testing Select</h1>
+    <input type="button" value="CLICK ME!" onclick="mapPekerjaan()" class="btn btn-primary">
+    <select onchange="testAlert()" id='testing'>
+        
+    </select>
+
+    <script>
+        function testAlert(){
+            var input = document.getElementById('testing').value
+
+            alert(input)
+        }
+
+        class Orang{
+            constructor(a,b){
+                this.nama = a,
+                this.pekerjaan = b
+            }
+        }
+
+        var data = [
+            new Orang('Seto', 'Coder'),
+            new Orang('Budi', 'Admin'),
+            new Orang('Andi', 'Designer')
+        ]
+
+        function mapPekerjaan(){
+            var hasil = ''
+
+            data.map((val) => {
+                hasil += `<option value="${val.pekerjaan}" >${val.pekerjaan}</option>`
+            })
+
+            document.getElementById('testing').innerHTML = hasil
+        }
+
+    </script>
+</body>
+</html>

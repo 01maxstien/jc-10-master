@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    .warna-pink{
+        background-color: pink
+    }    
+
+    .border-hitam{
+        border : 1px solid black
+    }
+    </style>
+
+    <h1></h1>
+    <h1></h1>
+    <div style="background-color: whitesmoke">
+        <h1></h1>
+    </div>
+    <div>
+        <h1 class="jomblo"></h1>
+    </div>
+
+    <div id='zheyeng' style="text-align: center">
+        <!-- <h1 id='zheyeng'></h1> -->
+    </div>
+    <br>
+    <br>
+    
+    <div style="text-align:center" >
+        <input type="button" value="CLICK ME!" onclick="tambahZheyeng()"/> 
+    </div>
+
+    <script>
+        function tampil(){
+            document.getElementById('zheyeng').innerHTML = 'Hai zheyenggg'
+        }
+
+        function tambahZheyeng(){
+            document.getElementById('zheyeng').innerHTML += `<img style="width:150px" src='https://cdn2.tstatic.net/style/foto/bank/images/iya-sheyeng.jpg'></img>`
+        }
+
+        var x = 'Hello World'
+
+        // document.getElementById('JC').innerHTML = x
+        document.getElementsByTagName('h1')[0].innerHTML = x
+        document.getElementsByTagName('h1')[1].innerHTML = x + ' !'
+        document.getElementsByTagName('h1')[2].innerHTML = x + ' !'
+        document.getElementsByClassName("jomblo")[0].innerHTML = 'Aku Galau'
+        document.getElementsByTagName('div')[1].className = 'warna-pink border-hitam'
+
+
+    </script>
+</body>
+</html>

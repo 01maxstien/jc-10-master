@@ -1,0 +1,54 @@
+<script>
+do{
+    var firstDigit = prompt('Insert first digit')
+    var secondDigit = prompt('Insert second digit')
+    
+    var operator = prompt('Insert operator (+ - / x)') // \n <- Enter atau break line
+    
+    var total
+    
+    if(operator == 'x'){
+        total = parseInt(firstDigit) * parseInt(secondDigit)
+    } else if(operator == '+'){
+        total = parseInt(firstDigit) + parseInt(secondDigit)
+    } else if(operator == '-'){
+        total = parseInt(firstDigit) - parseInt(secondDigit)
+    } else if(operator == '/'){
+        total = parseInt(firstDigit)/parseInt(secondDigit)
+    }
+    
+    alert('The result is ' + total)
+    var repeat = confirm('Would you like to count again?')
+
+    if(!repeat){
+        alert('Thank you, please come again')
+    }
+
+}while(repeat)
+
+
+
+
+
+/*
+
+1. Input angka1
+2. Input angka2
+3. Pilih Operator (+ - x /)
+4. Tampilkan result
+5. Konfirmasi ulang atau tidak?
+6. Jika tidak ulang, tampilkan message selamat tinggal
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+</script>
